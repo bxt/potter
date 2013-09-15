@@ -4,19 +4,27 @@ Hallo <%= @username %>,
 wir haben Zuwachs! <%= @pot.new_members.map(&:name).join(", ") %> <%= @pot.new_members.to_a.count == 1 ? "ist" : "sind" %> heute zum ersten Mal dabei!
 <% end %>
 
+
+<% if links_grouped_by_hottiness.any? %>
+  
 diese Woche haben sich folgende Links angesammelt:
 
-<%  @links_grouped_by_hottiness.each_pair do |hottiness, links| %>
-
-  <%= ['Interessant', 'Sollte man gelesen haben', 'Lesebefehl!'][hottiness-1] %>
-  <%= "=" * ['Interessant', 'Sollte man gelesen haben', 'Lesebefehl!'][hottiness-1].length %>
-
-  <% links.each do |link| %>
-    <%= link.name %> (von <%= link.user.name %>)
-        → <%= link.url %>
-        <%= link.description.present? ? "„#{link.description}“" : '' %>
-
+  <%  @links_grouped_by_hottiness.each_pair do |hottiness, links| %>
+  
+    <%= ['Interessant', 'Sollte man gelesen haben', 'Lesebefehl!'][hottiness-1] %>
+    <%= "=" * ['Interessant', 'Sollte man gelesen haben', 'Lesebefehl!'][hottiness-1].length %>
+  
+    <% links.each do |link| %>
+      <%= link.name %> (von <%= link.user.name %>)
+          → <%= link.url %>
+          <%= link.description.present? ? "„#{link.description}“" : '' %>
+  
+    <% end %>
   <% end %>
+<% else %>
+  
+diese Woche haben sich leider keine Links angesammelt.
+  
 <% end %>
 
 Diese Email wurde natürlich auch an alle anderen Mitglieder geschickt:
